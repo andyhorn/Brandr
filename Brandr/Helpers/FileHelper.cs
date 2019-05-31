@@ -109,5 +109,34 @@ namespace Brandr.Helpers
 
             return path;
         }
+
+        public static byte[] GetFileBytes(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                var file = File.OpenRead(filePath);
+
+                if (file.CanRead)
+                {
+                    var length = (int)file.Length;
+                    var bytes = new byte[length];
+
+                    file.Read(bytes, 0, length);
+                    file.Close();
+
+                    return bytes;
+                }
+            }
+
+            return null;
+        }
+
+        public static void DeleteFile(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
     }
 }

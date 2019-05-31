@@ -3,6 +3,7 @@ using ImageProcessor;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,23 +21,27 @@ namespace Brandr.Models
         private readonly string SaveFilter = "BMP (*.bmp)|*.bmp|JPG (*.jpg)|*.jpg|JPEG (*.jpeg)|*.jpeg|GIF (*.gif)|*.gif|PNG (*.png)|*.png|All files (*.*)|*.*";
         private readonly string DefaultSaveFormat = "png";
 
-        /*public ImageSource Image
+        public ImageSource Image
         {
             get
             {
                 if (imageFactory.Image != null)
                 {
-                    //return ImageHelper.ConvertToImageSource(imageFactory.Image);
+                    var bytes = GetBytes();
+
+                    var image = ImageHelper.GetImage(bytes);
+
+                    return image;
                 }
                 else
                 {
                     return null;
                 }
             }
-        }*/
+        }
 
 
-        public ImageSource Image { get; set; }
+        //public ImageSource Image { get; set; }
 
         public BrandrImage()
         {
@@ -44,7 +49,7 @@ namespace Brandr.Models
             imageData = null;
         }
 
-        /*public bool LoadImage()
+        public bool LoadImage()
         {
             using(var stream = FileHelper.OpenFile(ImageFilter))
             {
@@ -58,22 +63,22 @@ namespace Brandr.Models
             }
 
             return false;
-        }*/
-
-        public void LoadImage()
-        {
-            using(var stream = FileHelper.OpenFile(ImageFilter))
-            {
-                imageData = FileHelper.GetBytes(stream);
-            }
-
-            if (imageData != null)
-            {
-                Image = ImageHelper.GetImage(imageData);
-            }
         }
 
-        /*public void SaveImage()
+        //public void LoadImage()
+        //{
+        //    using(var stream = FileHelper.OpenFile(ImageFilter))
+        //    {
+        //        imageData = FileHelper.GetBytes(stream);
+        //    }
+
+        //    if (imageData != null)
+        //    {
+        //        Image = ImageHelper.GetImage(imageData);
+        //    }
+        //}
+
+        public void SaveImage()
         {
             var filePath = FileHelper.GetSavePath(SaveFilter, DefaultSaveFormat);
 
@@ -81,11 +86,25 @@ namespace Brandr.Models
             {
                 imageFactory.Save(filePath);
             }
-        }*/
+        }
 
-        public void SaveImage()
+        //public void SaveImage()
+        //{
+        //    FileHelper.SaveFile(imageData, SaveFilter, DefaultSaveFormat);
+        //}
+
+        private byte[] GetBytes()
         {
-            FileHelper.SaveFile(imageData, SaveFilter, DefaultSaveFormat);
+            var extension = imageFactory.CurrentImageFormat.ImageFormat;
+
+            var filePath = $"./tmp.{extension}";
+            imageFactory.Save(filePath);
+
+            var bytes = FileHelper.GetFileBytes(filePath);
+
+            FileHelper.DeleteFile(filePath);
+
+            return bytes;
         }
     }
 }
