@@ -1,8 +1,5 @@
-﻿using Brandr.Helpers;
-using Brandr.Models;
+﻿using Brandr.Models;
 using System.ComponentModel;
-using System.IO;
-using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Brandr.ViewModels

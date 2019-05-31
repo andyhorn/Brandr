@@ -36,7 +36,7 @@ namespace Brandr
             viewModel.SaveImage();
         }
 
-        
+
         private void BrandingChanged(object sender, TextChangedEventArgs e)
         {
             viewModel.BrandingText = Brand_Text.Text;

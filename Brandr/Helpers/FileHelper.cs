@@ -15,7 +15,7 @@ namespace Brandr.Helpers
 
             var isSelected = openDialog.ShowDialog();
 
-            if (isSelected.HasValue && isSelected.Equals(true))
+            if(isSelected.HasValue && isSelected.Equals(true))
             {
                 var stream = openDialog.OpenFile();
 
@@ -35,7 +35,7 @@ namespace Brandr.Helpers
 
             var isSelected = openDialog.ShowDialog();
 
-            if (isSelected.HasValue && isSelected.Equals(true))
+            if(isSelected.HasValue && isSelected.Equals(true))
             {
                 var streams = openDialog.OpenFiles();
 
@@ -54,22 +54,24 @@ namespace Brandr.Helpers
 
         public static void SaveFile(byte[] bytes, string filter = null, string def = null)
         {
-            if (bytes == null || !(bytes.Length > 0))
+            if(bytes == null || !(bytes.Length > 0))
             {
                 return;
             }
 
             var length = bytes.Length;
 
-            var saveDialog = new SaveFileDialog();
-            saveDialog.Filter = filter;
-            saveDialog.DefaultExt = def;
+            var saveDialog = new SaveFileDialog
+            {
+                Filter = filter,
+                DefaultExt = def
+            };
 
             saveDialog.ShowDialog();
 
             var file = saveDialog.OpenFile();
 
-            if (file.CanWrite)
+            if(file.CanWrite)
             {
                 file.Write(bytes, 0, length);
                 file.Flush();
@@ -80,7 +82,9 @@ namespace Brandr.Helpers
         public static byte[] GetBytes(Stream stream)
         {
             if(stream == null)
+            {
                 return null;
+            }
 
             var length = (int)stream.Length;
 

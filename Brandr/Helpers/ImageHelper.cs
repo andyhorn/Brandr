@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -46,6 +44,6 @@ namespace Brandr.Helpers
 
             var bytes = stream.ToArray();
             return bytes;
-        }       
+        }
     }
 }
