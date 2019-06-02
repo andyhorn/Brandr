@@ -36,7 +36,7 @@
                     <MenuItem Header="_Open" Click="Load_Button_Click"/>
                     <MenuItem Header="_Save" Click="Save_Button_Click"/>
                     <Separator/>
-                    <MenuItem Header="E_xit"/>
+                    <MenuItem Header="E_xit" Click="Exit_Button_Click"/>
                 </MenuItem>
             </Menu>
         </DockPanel>
@@ -57,20 +57,35 @@
             <StackPanel
                 Grid.Column="0"
                 Grid.Row="1">
-                <WrapPanel Orientation="Horizontal">
-                    <Label Content="Saturation: "/>
-                    <Label Content="{Binding Saturation}"/>
-                </WrapPanel>
-                
-                <Slider
+                <StackPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="Saturation: "/>
+                        <Label Content="{Binding Saturation}"/>
+                    </WrapPanel>
+
+                    <Slider
                     Name="SaturationSlider"
                     Minimum="-100"
                     Maximum="100"
                     IsSnapToTickEnabled="True"
                     TickFrequency="2"
-                    TickPlacement="BottomRight"
                     ValueChanged="SaturationSlider_ValueChanged"
                     PreviewMouseUp="SaturationSlider_MouseUp"/>
+                </StackPanel>
+                <StackPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="Exposure"/>
+                        <Label Content="{Binding Exposure}"/>
+                    </WrapPanel>
+                    <Slider
+                        Name="ExposureSlider"
+                        Minimum="-100"
+                        Maximum="100"
+                        IsSnapToTickEnabled="True"
+                        TickFrequency="1"
+                        ValueChanged="ExposureSlider_ValueChanged"
+                        PreviewMouseUp="ExposureSlider_PreviewMouseUp"/>
+                </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="0"
                         Grid.Row="2"

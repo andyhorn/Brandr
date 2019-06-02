@@ -7,13 +7,8 @@ namespace Brandr.ViewModels
     {
         private string brandingText;
         public BrandrImage BrandrImage { get; set; }
-        public byte[] Image
-        {
-            get
-            {
-                return BrandrImage.Image;
-            }
-        }
+        public byte[] Image { get => BrandrImage.Image; }
+
         public string BrandingText
         {
             get => brandingText;
@@ -23,7 +18,7 @@ namespace Brandr.ViewModels
                 OnPropertyChanged("BrandingText");
             }
         }
-        public int Saturation
+        public double Saturation
         {
             get => BrandrImage.Saturation;
             set
@@ -32,11 +27,25 @@ namespace Brandr.ViewModels
                 OnPropertyChanged("Saturation");
             }
         }
+        public double Exposure
+        {
+            get => BrandrImage.Exposure;
+            set
+            {
+                BrandrImage.Exposure = value;
+                OnPropertyChanged("Exposure");
+            }
+        }
 
         public void SetSaturation()
         {
             BrandrImage.SetSaturation();
 
+            OnPropertyChanged("Image");
+        }
+        public void SetExposure()
+        {
+            BrandrImage.SetExposure();
             OnPropertyChanged("Image");
         }
 

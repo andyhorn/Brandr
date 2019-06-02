@@ -5,7 +5,7 @@ namespace Brandr.Helpers
 {
     public static class Processor
     {
-        public static byte[] Saturation(byte[] buffer, int saturation)
+        public static void Saturation(ref byte[] buffer, double saturation)
         {
             using(var inputStream = new MemoryStream(buffer))
             {
@@ -14,17 +14,39 @@ namespace Brandr.Helpers
                     using(var factory = new ImageFactory())
                     {
                         factory.Load(inputStream)
-                            .Saturation(saturation)
+                            .Saturation((int)saturation)
                             .Save(outputStream);
                     }
 
                     var length = (int)outputStream.Length;
 
-                    var bytes = new byte[length];
+                    //var bytes = new byte[length];
+                    buffer = new byte[length];
 
-                    outputStream.Read(bytes, 0, length);
+                    outputStream.Read(buffer, 0, length);
+                }
+            }
+        }
 
-                    return bytes;
+        public static void Exposure(ref byte[] buffer, double exposure)
+        {
+            using(var inputStream = new MemoryStream(buffer))
+            {
+                using(var outputStream = new MemoryStream())
+                {
+                    using(var factory = new ImageFactory())
+                    {
+                        factory.Load(inputStream)
+                            .Brightness((int)exposure)
+                            .Save(outputStream);
+                    }
+
+                    var length = (int)outputStream.Length;
+
+                    //var bytes = new byte[length];
+                    buffer = new byte[length];
+
+                    outputStream.Read(buffer, 0, length);
                 }
             }
         }

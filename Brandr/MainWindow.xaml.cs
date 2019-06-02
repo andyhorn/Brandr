@@ -29,6 +29,8 @@ namespace Brandr
         private void Load_Button_Click(object sender, RoutedEventArgs e)
         {
             viewModel.LoadImage();
+            SaturationSlider.Value = 0;
+            ExposureSlider.Value = 0;
         }
 
         private void Save_Button_Click(object sender, RoutedEventArgs e)
@@ -51,6 +53,21 @@ namespace Brandr
         private void SaturationSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             viewModel.Saturation = (int)SaturationSlider.Value;
+        }
+
+        private void ExposureSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            viewModel.Exposure = (int)ExposureSlider.Value;
+        }
+
+        private void ExposureSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            viewModel.SetExposure();
+        }
+
+        private void Exit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown(0);
         }
 
         /*

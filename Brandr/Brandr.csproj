@@ -61,8 +61,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="Helpers\Processor.cs" />
     <Compile Include="Models\BrandrImage.cs" />
+    <Compile Include="Models\IEditOperation.cs" />
+    <Compile Include="Models\OperationList.cs" />
+    <Compile Include="Models\Operations\Exposure.cs" />
+    <Compile Include="Models\Operations\Saturation.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -9,6 +9,7 @@ namespace Brandr.Models
         private readonly string DefaultSaveFormat = "png";
         private byte[] _buffer;
         private byte[] _display;
+        private OperationList _ops;
         public byte[] Image
         {
             get
@@ -30,29 +31,43 @@ namespace Brandr.Models
             }
         }
 
-        public int Saturation { get; set; }
+        public double Saturation
+        {
+            get
+            {
+                return _ops.Saturation.Get();
+            }
+            set
+            {
+                _ops.Saturation.Set(value);
+            } 
+        }
+        public double Exposure
+        {
+            get
+            {
+                return _ops.Exposure.Get();
+            }
+            set
+            {
+                _ops.Exposure.Set(value);
+            }
+        }
 
         public BrandrImage()
         {
             _buffer = null;
             _display = null;
+            _ops = new OperationList();
         }
 
         public bool LoadImage()
         {
-            //var filePath = FileHelper.GetFilePath(ImageFilter);
-
-            //if(!string.IsNullOrWhiteSpace(filePath))
-            //{
-            //    var bytes = FileHelper.GetFileBytes(filePath);
-            //    _buffer = bytes;
-            //}
-
-            //return _buffer != null;
-
             var bytes = FileHelper.GetBytes(ImageFilter);
 
             _buffer = bytes;
+
+            _ops.ResetAll();
 
             return _buffer != null;
         }
@@ -65,10 +80,41 @@ namespace Brandr.Models
             }
         }
 
+        public void Set()
+        {
+            if (_buffer != null)
+            {
+                byte[] bytes = new byte[_buffer.Length];
+                _buffer.CopyTo(bytes, 0);
+
+                if (_ops.Saturation.Changed)
+                {
+                    double saturation = _ops.Saturation.Get();
+                    Processor.Saturation(ref bytes, saturation);
+                }
+
+                if(_ops.Exposure.Changed)
+                {
+                    //var exposure = MathHelper.AdjustRange(_ops.Exposure.Get(), 100, -100, 5, 0);
+                    double exposure = _ops.Exposure.Get();
+                    Processor.Exposure(ref bytes, exposure);
+                }
+
+                int length = bytes.Length;
+
+                _display = new byte[length];
+
+                bytes.CopyTo(_display, 0);
+            }
+        }
+
         public void SetSaturation()
         {
-            var bytes = Processor.Saturation(_buffer, Saturation);
-            _display = bytes;
+            Set();
+        }
+        public void SetExposure()
+        {
+            Set();
         }
     }
 }
