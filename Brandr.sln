@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brandr.UI", "Brandr\Brandr.UI.csproj", "{E2B7C917-E362-44DE-B9F2-B9901C7C8EAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brandr", "Brandr\Brandr.csproj", "{E2B7C917-E362-44DE-B9F2-B9901C7C8EAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
