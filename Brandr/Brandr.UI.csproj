@@ -61,7 +61,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\FileHelper.cs" />
-    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\Processor.cs" />
     <Compile Include="Models\BgraBitmap.cs" />
     <Compile Include="Models\BrandrImage.cs" />
