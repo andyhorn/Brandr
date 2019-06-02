@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -15,6 +16,22 @@ namespace Brandr.Helpers
             var imageSource = imageConverter.ConvertFrom(data) as ImageSource;
 
             return imageSource;
+        }
+
+        public static WriteableBitmap GetBitmap(byte[] data)
+        {
+            using(var stream = new MemoryStream(data))
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.StreamSource = stream;
+                bitmap.EndInit();
+
+                var write = new WriteableBitmap(bitmap);
+
+                return write;
+            }
         }
 
         public static byte[] GetBytes(Canvas canvas, double pixelDensity = 96d)

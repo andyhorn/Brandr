@@ -1,110 +1,91 @@
 ﻿using Brandr.Helpers;
-using ImageProcessor;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace Brandr.Models
 {
     public class BrandrImage
     {
-        private readonly ImageFactory imageFactory;
-        private byte[] imageData;
-
         private readonly string ImageFilter = "Images (*.bmp;*.jpg;*.gif;*.png;*.jpeg)|*.bmp;*.jpg;*.gif;*.png;*.jpeg";
         private readonly string SaveFilter = "BMP (*.bmp)|*.bmp|JPG (*.jpg)|*.jpg|JPEG (*.jpeg)|*.jpeg|GIF (*.gif)|*.gif|PNG (*.png)|*.png|All files (*.*)|*.*";
         private readonly string DefaultSaveFormat = "png";
-
-        public ImageSource Image
+        private byte[] _buffer;
+        private byte[] _display;
+        public byte[] Image
         {
             get
             {
-                if (imageFactory.Image != null)
-                {
-                    var bytes = GetBytes();
-
-                    var image = ImageHelper.GetImage(bytes);
-
-                    return image;
-                }
-                else
+                if(_buffer == null)
                 {
                     return null;
                 }
+
+                if(_display == null)
+                {
+                    var length = _buffer.Length;
+                    _display = new byte[length];
+                    _buffer.CopyTo(_display, 0);
+                }
+
+                //_buffer.CopyTo(_display, 0);
+                return _display;
             }
         }
 
-
-        //public ImageSource Image { get; set; }
+        public int Saturation { get; set; }
 
         public BrandrImage()
         {
-            imageFactory = new ImageFactory();
-            imageData = null;
+            _buffer = null;
+            _display = null;
         }
 
         public bool LoadImage()
         {
-            using(var stream = FileHelper.OpenFile(ImageFilter))
+            var filePath = FileHelper.GetFilePath(ImageFilter);
+
+            if(!string.IsNullOrWhiteSpace(filePath))
             {
-                imageData = FileHelper.GetBytes(stream);
+                var bytes = FileHelper.GetFileBytes(filePath);
+                _buffer = bytes;
             }
 
-            if (imageData != null)
-            {
-                imageFactory.Load(imageData);
-                return true;
-            }
-
-            return false;
+            return _buffer != null;
         }
-
-        //public void LoadImage()
-        //{
-        //    using(var stream = FileHelper.OpenFile(ImageFilter))
-        //    {
-        //        imageData = FileHelper.GetBytes(stream);
-        //    }
-
-        //    if (imageData != null)
-        //    {
-        //        Image = ImageHelper.GetImage(imageData);
-        //    }
-        //}
 
         public void SaveImage()
         {
+            if(_buffer == null || _display == null)
+            {
+                return;
+            }
+
             var filePath = FileHelper.GetSavePath(SaveFilter, DefaultSaveFormat);
 
-            if(filePath != string.Empty)
+            if(string.IsNullOrWhiteSpace(filePath))
             {
-                imageFactory.Save(filePath);
+                return;
+            }
+
+            int index = filePath.LastIndexOf('.');
+
+            var fileExtension = filePath.Substring(index);
+
+            if(string.IsNullOrWhiteSpace(fileExtension))
+            {
+                return;
+            }
+
+            using(var stream = File.OpenWrite(filePath))
+            {
+                var bytes = Image;
+                stream.Write(bytes, 0, bytes.Length);
             }
         }
 
-        //public void SaveImage()
-        //{
-        //    FileHelper.SaveFile(imageData, SaveFilter, DefaultSaveFormat);
-        //}
-
-        private byte[] GetBytes()
+        public void SetSaturation()
         {
-            var extension = imageFactory.CurrentImageFormat.ImageFormat;
-
-            var filePath = $"./tmp.{extension}";
-            imageFactory.Save(filePath);
-
-            var bytes = FileHelper.GetFileBytes(filePath);
-
-            FileHelper.DeleteFile(filePath);
-
-            return bytes;
+            var bytes = Processor.Saturation(_buffer, Saturation);
+            _display = bytes;
         }
     }
 }

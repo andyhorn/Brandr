@@ -1,15 +1,18 @@
 ﻿using Brandr.Models;
 using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Brandr.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private string brandingText;
-        private double saturation;
+        //private double saturation;
         public BrandrImage BrandrImage { get; set; }
-        public ImageSource Image
+        public byte[] Image
         {
             get
             {
@@ -25,14 +28,23 @@ namespace Brandr.ViewModels
                 OnPropertyChanged("BrandingText");
             }
         }
-        public double Saturation
+        public int Saturation
         {
-            get => saturation;
+            get => BrandrImage.Saturation;
             set
             {
-                saturation = value;
+                //saturation = value;
+                BrandrImage.Saturation = value;
                 OnPropertyChanged("Saturation");
+                //OnPropertyChanged("Image");
             }
+        }
+
+        public void SetSaturation()
+        {
+            BrandrImage.SetSaturation();
+            
+            OnPropertyChanged("Image");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -42,10 +54,12 @@ namespace Brandr.ViewModels
             BrandrImage = new BrandrImage();
         }
 
-        public void LoadImage()
+        public bool LoadImage()
         {
             BrandrImage.LoadImage();
             OnPropertyChanged("Image");
+
+            return Image != null;
         }
 
         public void SaveImage()

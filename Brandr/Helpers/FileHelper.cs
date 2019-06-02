@@ -7,6 +7,13 @@ namespace Brandr.Helpers
     {
         public static Stream OpenFile(string filter = null)
         {
+            var filePath = GetFilePath(filter);
+
+            var stream = File.OpenRead(filePath);
+
+            return stream;
+            
+            /*
             var openDialog = new OpenFileDialog
             {
                 Multiselect = false,
@@ -23,6 +30,7 @@ namespace Brandr.Helpers
             }
 
             return null;
+            */
         }
 
         public static Stream[] OpenFiles(string filter = null)
@@ -108,6 +116,26 @@ namespace Brandr.Helpers
             var path = saveDialog.FileName;
 
             return path;
+        }
+
+        public static string GetFilePath(string filter = null)
+        {
+            var openDialog = new OpenFileDialog
+            {
+                Filter = filter,
+                Multiselect = false
+            };
+
+            var selected = openDialog.ShowDialog();
+
+            if (selected.HasValue && selected.Equals(true))
+            {
+                var filePath = openDialog.FileName;
+
+                return filePath;
+            }
+
+            return null;
         }
 
         public static byte[] GetFileBytes(string filePath)
