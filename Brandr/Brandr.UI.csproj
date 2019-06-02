@@ -62,7 +62,6 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\Processor.cs" />
-    <Compile Include="Models\BgraBitmap.cs" />
     <Compile Include="Models\BrandrImage.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="MainWindow.xaml">
