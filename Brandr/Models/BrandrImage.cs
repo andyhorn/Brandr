@@ -1,5 +1,4 @@
 ﻿using Brandr.Helpers;
-using System.IO;
 
 namespace Brandr.Models
 {
@@ -41,44 +40,28 @@ namespace Brandr.Models
 
         public bool LoadImage()
         {
-            var filePath = FileHelper.GetFilePath(ImageFilter);
+            //var filePath = FileHelper.GetFilePath(ImageFilter);
 
-            if(!string.IsNullOrWhiteSpace(filePath))
-            {
-                var bytes = FileHelper.GetFileBytes(filePath);
-                _buffer = bytes;
-            }
+            //if(!string.IsNullOrWhiteSpace(filePath))
+            //{
+            //    var bytes = FileHelper.GetFileBytes(filePath);
+            //    _buffer = bytes;
+            //}
+
+            //return _buffer != null;
+
+            var bytes = FileHelper.GetBytes(ImageFilter);
+
+            _buffer = bytes;
 
             return _buffer != null;
         }
 
         public void SaveImage()
         {
-            if(_buffer == null || _display == null)
+            if(_display != null)
             {
-                return;
-            }
-
-            var filePath = FileHelper.GetSavePath(SaveFilter, DefaultSaveFormat);
-
-            if(string.IsNullOrWhiteSpace(filePath))
-            {
-                return;
-            }
-
-            int index = filePath.LastIndexOf('.');
-
-            var fileExtension = filePath.Substring(index);
-
-            if(string.IsNullOrWhiteSpace(fileExtension))
-            {
-                return;
-            }
-
-            using(var stream = File.OpenWrite(filePath))
-            {
-                var bytes = Image;
-                stream.Write(bytes, 0, bytes.Length);
+                FileHelper.SaveBytes(_display, SaveFilter, DefaultSaveFormat);
             }
         }
 

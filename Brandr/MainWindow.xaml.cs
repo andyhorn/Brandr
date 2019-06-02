@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace Brandr
 {
@@ -29,11 +28,7 @@ namespace Brandr
 
         private void Load_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (viewModel.LoadImage())
-            {
-                SaturationSlider.Value = 0;
-                //ImageDisplay.Source = viewModel.Image;
-            }
+            viewModel.LoadImage();
         }
 
         private void Save_Button_Click(object sender, RoutedEventArgs e)
@@ -47,11 +42,6 @@ namespace Brandr
             viewModel.BrandingText = Brand_Text.Text;
         }
 
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-
-        }
-
         private void SaturationSlider_MouseUp(object sender, MouseButtonEventArgs e)
         {
             viewModel.Saturation = (int)SaturationSlider.Value;
@@ -61,7 +51,6 @@ namespace Brandr
         private void SaturationSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             viewModel.Saturation = (int)SaturationSlider.Value;
-            //viewModel.SetSaturation();
         }
 
         /*
