@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Documents;
 
 namespace Brandr
 {
@@ -44,12 +45,6 @@ namespace Brandr
             viewModel.BrandingText = Brand_Text.Text;
         }
 
-        private void SaturationSlider_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            viewModel.Saturation = (int)SaturationSlider.Value;
-            viewModel.SetSaturation();
-        }
-
         private void SaturationSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             viewModel.Saturation = (int)SaturationSlider.Value;
@@ -60,14 +55,40 @@ namespace Brandr
             viewModel.Exposure = (int)ExposureSlider.Value;
         }
 
-        private void ExposureSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        private void ParameterSet(object sender, MouseButtonEventArgs e)
         {
-            viewModel.SetExposure();
+            viewModel.Process();
         }
 
         private void Exit_Button_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown(0);
+        }
+
+        private void Reset(object sender, RoutedEventArgs e)
+        {
+            var link = sender as Hyperlink;
+
+            var tag = link.Tag.ToString();
+
+            switch(tag)
+            {
+                case "Exposure":
+                {
+                    ExposureSlider.Value = 0;
+                    viewModel.Exposure = 0;
+                    break;
+                }
+                case "Saturation":
+                {
+                    SaturationSlider.Value = 0;
+                    viewModel.Saturation = 0;
+                    break;
+                }
+            }
+
+            viewModel.Process();
+            //viewModel.Reset(tag);
         }
 
         /*

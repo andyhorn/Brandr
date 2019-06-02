@@ -37,15 +37,9 @@ namespace Brandr.ViewModels
             }
         }
 
-        public void SetSaturation()
+        public void Process()
         {
-            BrandrImage.SetSaturation();
-
-            OnPropertyChanged("Image");
-        }
-        public void SetExposure()
-        {
-            BrandrImage.SetExposure();
+            BrandrImage.ProcessChanges();
             OnPropertyChanged("Image");
         }
 

@@ -80,7 +80,7 @@ namespace Brandr.Models
             }
         }
 
-        public void Set()
+        public void ProcessChanges()
         {
             if (_buffer != null)
             {
@@ -108,13 +108,26 @@ namespace Brandr.Models
             }
         }
 
-        public void SetSaturation()
+        public void Reset(string property)
         {
-            Set();
-        }
-        public void SetExposure()
-        {
-            Set();
+            if(string.IsNullOrWhiteSpace(property))
+            {
+                return;
+            }
+
+            switch(property)
+            {
+                case "Exposure":
+                {
+                    _ops.Exposure.Reset();
+                    break;
+                }
+                case "Saturation":
+                {
+                    _ops.Saturation.Reset();
+                    break;
+                }
+            }
         }
     }
 }

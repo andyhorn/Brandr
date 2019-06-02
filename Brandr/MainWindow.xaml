@@ -58,25 +58,42 @@
                 Grid.Column="0"
                 Grid.Row="1">
                 <StackPanel>
-                    <WrapPanel Orientation="Horizontal">
-                        <Label Content="Saturation: "/>
-                        <Label Content="{Binding Saturation}"/>
-                    </WrapPanel>
-
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Saturation: "/>
+                        <Label Grid.Column="1" Content="{Binding Saturation}"
+                               HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="2" VerticalAlignment="Center">
+                            <Hyperlink Click="Reset" Tag="Saturation">Reset</Hyperlink>
+                        </TextBlock>
+                    </Grid>
                     <Slider
                     Name="SaturationSlider"
                     Minimum="-100"
                     Maximum="100"
                     IsSnapToTickEnabled="True"
-                    TickFrequency="2"
+                    TickFrequency="1"
                     ValueChanged="SaturationSlider_ValueChanged"
-                    PreviewMouseUp="SaturationSlider_MouseUp"/>
+                    PreviewMouseUp="ParameterSet"/>
                 </StackPanel>
                 <StackPanel>
-                    <WrapPanel Orientation="Horizontal">
-                        <Label Content="Exposure"/>
-                        <Label Content="{Binding Exposure}"/>
-                    </WrapPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Exposure: "/>
+                        <Label Grid.Column="1" Content="{Binding Exposure}"
+                               HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="2" VerticalAlignment="Center">
+                            <Hyperlink Click="Reset" Tag="Exposure">Reset</Hyperlink>
+                        </TextBlock>
+                    </Grid>
                     <Slider
                         Name="ExposureSlider"
                         Minimum="-100"
@@ -84,7 +101,7 @@
                         IsSnapToTickEnabled="True"
                         TickFrequency="1"
                         ValueChanged="ExposureSlider_ValueChanged"
-                        PreviewMouseUp="ExposureSlider_PreviewMouseUp"/>
+                        PreviewMouseUp="ParameterSet"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="0"
