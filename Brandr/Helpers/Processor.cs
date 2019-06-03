@@ -6,48 +6,7 @@ namespace Brandr.Helpers
 {
     public static class Processor
     {
-        public static void Process(ref byte[] buffer, double value, string method)
-        {
-            using(var inputStream = new MemoryStream(buffer))
-            {
-                using(var outputStream = new MemoryStream())
-                {
-                    using(var factory = new ImageFactory())
-                    {
-                        factory.Load(inputStream);
-
-                        switch(method)
-                        {
-                            case "Saturation":
-                            {
-                                factory.Saturation((int)value);
-                                break;
-                            }
-                            case "Exposure":
-                            {
-                                factory.Brightness((int)value);
-                                break;
-                            }
-                            case "Contrast":
-                            {
-                                factory.Contrast((int)value);
-                                break;
-                            }
-                        }
-
-                        factory.Save(outputStream);
-
-                        var length = (int)outputStream.Length;
-
-                        buffer = new byte[length];
-
-                        outputStream.Read(buffer, 0, length);
-                    }
-                }
-            }
-        }
-
-        public static void ProcessMultiple(ref byte[] buffer, Dictionary<string, double> edits)
+        public static void Process(ref byte[] buffer, Dictionary<string, double> edits)
         {
             using(var inputStream = new MemoryStream(buffer))
             {
@@ -61,6 +20,11 @@ namespace Brandr.Helpers
                         {
                             switch(edit.Key)
                             {
+                                case "Alpha":
+                                {
+                                    factory.Alpha((int)edit.Value);
+                                    break;
+                                }
                                 case "Contrast":
                                 {
                                     factory.Contrast((int)edit.Value);
@@ -69,6 +33,32 @@ namespace Brandr.Helpers
                                 case "Exposure":
                                 {
                                     factory.Brightness((int)edit.Value);
+                                    break;
+                                }
+                                case "Flip":
+                                {
+                                    var flipVertical = edit.Value == 1;
+                                    factory.Flip(flipVertical);
+                                    break;
+                                }
+                                case "Pixelate":
+                                {
+                                    factory.Pixelate((int)edit.Value);
+                                    break;
+                                }
+                                case "Quality":
+                                {
+                                    factory.Quality((int)edit.Value);
+                                    break;
+                                }
+                                case "Rotate":
+                                {
+                                    factory.Rotate((int)edit.Value);
+                                    break;
+                                }
+                                case "Rounded":
+                                {
+                                    factory.RoundedCorners((int)edit.Value);
                                     break;
                                 }
                                 case "Saturation":
@@ -90,52 +80,5 @@ namespace Brandr.Helpers
                 }
             }
         }
-        /*
-        public static void Saturation(ref byte[] buffer, double saturation)
-        {
-            using(var inputStream = new MemoryStream(buffer))
-            {
-                using(var outputStream = new MemoryStream())
-                {
-                    using(var factory = new ImageFactory())
-                    {
-                        factory.Load(inputStream)
-                            .Saturation((int)saturation)
-                            .Save(outputStream);
-                    }
-
-                    var length = (int)outputStream.Length;
-
-                    //var bytes = new byte[length];
-                    buffer = new byte[length];
-
-                    outputStream.Read(buffer, 0, length);
-                }
-            }
-        }
-
-        public static void Exposure(ref byte[] buffer, double exposure)
-        {
-            using(var inputStream = new MemoryStream(buffer))
-            {
-                using(var outputStream = new MemoryStream())
-                {
-                    using(var factory = new ImageFactory())
-                    {
-                        factory.Load(inputStream)
-                            .Brightness((int)exposure)
-                            .Save(outputStream);
-                    }
-
-                    var length = (int)outputStream.Length;
-
-                    //var bytes = new byte[length];
-                    buffer = new byte[length];
-
-                    outputStream.Read(buffer, 0, length);
-                }
-            }
-        }
-        */
     }
 }

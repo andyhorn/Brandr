@@ -1,6 +1,5 @@
 ﻿using Brandr.Helpers;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Brandr.Models
 {
@@ -12,6 +11,9 @@ namespace Brandr.Models
         private byte[] _buffer;
         private byte[] _display;
         private OperationList _ops;
+        public List<IEditOperation> Operations { get => _ops.Operations; }
+
+        #region Properties
         public byte[] Image
         {
             get
@@ -28,44 +30,18 @@ namespace Brandr.Models
                     _buffer.CopyTo(_display, 0);
                 }
 
-                //_buffer.CopyTo(_display, 0);
                 return _display;
             }
         }
+        public IEditOperation Saturation => _ops.Saturation;
+        public IEditOperation Exposure => _ops.Exposure;
+        public IEditOperation Contrast => _ops.Contrast;
 
-        public double Saturation
+        public void Set(string property, double value)
         {
-            get
-            {
-                return _ops.Saturation.Get();
-            }
-            set
-            {
-                _ops.Saturation.Set(value);
-            } 
+
         }
-        public double Exposure
-        {
-            get
-            {
-                return _ops.Exposure.Get();
-            }
-            set
-            {
-                _ops.Exposure.Set(value);
-            }
-        }
-        public double Contrast
-        {
-            get
-            {
-                return _ops.Contrast.Get();
-            }
-            set
-            {
-                _ops.Contrast.Set(value);
-            }
-        }
+        #endregion
 
         public BrandrImage()
         {
@@ -95,46 +71,21 @@ namespace Brandr.Models
 
         public void ProcessChanges()
         {
-            if (_buffer != null)
+            if(_buffer != null)
             {
-                byte[] bytes = new byte[_buffer.Length];
-                _buffer.CopyTo(bytes, 0);
+                byte[] bytes = null;
 
-                var edits = new Dictionary<string, double>();
-
-                if (_ops.Saturation.Changed)
-                {
-                    double saturation = _ops.Saturation.Get();
-                    edits.Add("Saturation", saturation);
-                    //Processor.Process(ref bytes, saturation, "Saturation");
-                }
-
-                if(_ops.Exposure.Changed)
-                {
-                    double exposure = _ops.Exposure.Get();
-                    edits.Add("Exposure", exposure);
-                    //Processor.Process(ref bytes, exposure, "Exposure");
-                }
-
-                if(_ops.Contrast.Changed)
-                {
-                    double contrast = _ops.Contrast.Get();
-                    edits.Add("Contrast", contrast);
-                    //Processor.Process(ref bytes, contrast, "Contrast");
-                }
+                var edits = _ops.GetChanged();
 
                 if(edits.Count == 0)
                 {
                     return;
                 }
-                else if(edits.Count == 1)
+                else
                 {
-                    var edit = edits.ToList().First();
-                    Processor.Process(ref bytes, edit.Value, edit.Key);
-                }
-                else if(edits.Count > 1)
-                {
-                    Processor.ProcessMultiple(ref bytes, edits);
+                    bytes = new byte[_buffer.Length];
+                    _buffer.CopyTo(bytes, 0);
+                    Processor.Process(ref bytes, edits);
                 }
 
                 int length = bytes.Length;
@@ -154,6 +105,11 @@ namespace Brandr.Models
 
             switch(property)
             {
+                case "Alpha":
+                {
+                    _ops.Alpha.Reset();
+                    break;
+                }
                 case "Exposure":
                 {
                     _ops.Exposure.Reset();
@@ -169,6 +125,14 @@ namespace Brandr.Models
                     _ops.Contrast.Reset();
                     break;
                 }
+            }
+        }
+
+        public void ResetAll()
+        {
+            foreach(var op in Operations)
+            {
+                op.Reset();
             }
         }
     }

@@ -21,7 +21,9 @@ namespace Brandr
 
             InitializeComponent();
 
-            viewModel.Saturation = (int)SaturationSlider.Value;
+            viewModel.ResetAll();
+
+            viewModel.ValueChanged("Alpha", 100);
             viewModel.BrandingText = Brand_Text.Text;
 
             DataContext = viewModel;
@@ -49,25 +51,9 @@ namespace Brandr
         {
             var slider = sender as Slider;
             var tag = slider.Tag as string;
+            var value = slider.Value;
 
-            switch(tag)
-            {
-                case "Contrast":
-                {
-                    viewModel.Contrast = slider.Value;
-                    break;
-                }
-                case "Exposure":
-                {
-                    viewModel.Exposure = slider.Value;
-                    break;
-                }
-                case "Saturation":
-                {
-                    viewModel.Saturation = slider.Value;
-                    break;
-                }
-            }
+            viewModel.ValueChanged(tag, value);
         }
 
         private void ParameterSet(object sender, MouseButtonEventArgs e)
@@ -88,27 +74,30 @@ namespace Brandr
 
             switch(tag)
             {
+                case "Alpha":
+                {
+                    AlphaSlider.Value = 100;
+                    break;
+                }
                 case "Exposure":
                 {
                     ExposureSlider.Value = 0;
-                    viewModel.Exposure = 0;
                     break;
                 }
                 case "Saturation":
                 {
                     SaturationSlider.Value = 0;
-                    viewModel.Saturation = 0;
                     break;
                 }
                 case "Contrast":
                 {
                     ContrastSlider.Value = 0;
-                    viewModel.Contrast = 0;
                     break;
                 }
             }
 
             viewModel.Process();
+            viewModel.Reset(tag);
         }
 
         /*
