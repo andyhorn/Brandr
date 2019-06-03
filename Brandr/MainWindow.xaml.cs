@@ -32,6 +32,7 @@ namespace Brandr
         private void Load_Button_Click(object sender, RoutedEventArgs e)
         {
             viewModel.LoadImage();
+            AlphaSlider.Value = 100;
             SaturationSlider.Value = 0;
             ExposureSlider.Value = 0;
             ContrastSlider.Value = 0;
