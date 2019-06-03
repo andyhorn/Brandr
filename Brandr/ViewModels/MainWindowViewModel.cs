@@ -37,6 +37,16 @@ namespace Brandr.ViewModels
             }
         }
 
+        public double Contrast
+        {
+            get => BrandrImage.Contrast;
+            set
+            {
+                BrandrImage.Contrast = value;
+                OnPropertyChanged("Contrast");
+            }
+        }
+
         public void Process()
         {
             BrandrImage.ProcessChanges();

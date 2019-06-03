@@ -53,6 +53,17 @@ namespace Brandr.Models
                 _ops.Exposure.Set(value);
             }
         }
+        public double Contrast
+        {
+            get
+            {
+                return _ops.Contrast.Get();
+            }
+            set
+            {
+                _ops.Contrast.Set(value);
+            }
+        }
 
         public BrandrImage()
         {
@@ -95,9 +106,14 @@ namespace Brandr.Models
 
                 if(_ops.Exposure.Changed)
                 {
-                    //var exposure = MathHelper.AdjustRange(_ops.Exposure.Get(), 100, -100, 5, 0);
                     double exposure = _ops.Exposure.Get();
                     Processor.Process(ref bytes, exposure, "Exposure");
+                }
+
+                if(_ops.Contrast.Changed)
+                {
+                    double contrast = _ops.Contrast.Get();
+                    Processor.Process(ref bytes, contrast, "Contrast");
                 }
 
                 int length = bytes.Length;
@@ -125,6 +141,11 @@ namespace Brandr.Models
                 case "Saturation":
                 {
                     _ops.Saturation.Reset();
+                    break;
+                }
+                case "Contrast":
+                {
+                    _ops.Contrast.Reset();
                     break;
                 }
             }

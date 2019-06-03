@@ -66,6 +66,7 @@
     <Compile Include="Models\BrandrImage.cs" />
     <Compile Include="Models\IEditOperation.cs" />
     <Compile Include="Models\OperationList.cs" />
+    <Compile Include="Models\Operations\Contrast.cs" />
     <Compile Include="Models\Operations\Exposure.cs" />
     <Compile Include="Models\Operations\Saturation.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

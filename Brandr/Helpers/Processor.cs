@@ -27,6 +27,11 @@ namespace Brandr.Helpers
                                 factory.Brightness((int)value);
                                 break;
                             }
+                            case "Contrast":
+                            {
+                                factory.Contrast((int)value);
+                                break;
+                            }
                         }
 
                         factory.Save(outputStream);

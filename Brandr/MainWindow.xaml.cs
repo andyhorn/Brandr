@@ -55,6 +55,11 @@ namespace Brandr
             viewModel.Exposure = (int)ExposureSlider.Value;
         }
 
+        private void ContrastSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            viewModel.Contrast = (int)ContrastSlider.Value;
+        }
+
         private void ParameterSet(object sender, MouseButtonEventArgs e)
         {
             viewModel.Process();
@@ -85,10 +90,15 @@ namespace Brandr
                     viewModel.Saturation = 0;
                     break;
                 }
+                case "Contrast":
+                {
+                    ContrastSlider.Value = 0;
+                    viewModel.Contrast = 0;
+                    break;
+                }
             }
 
             viewModel.Process();
-            //viewModel.Reset(tag);
         }
 
         /*

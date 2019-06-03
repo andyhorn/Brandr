@@ -3,7 +3,8 @@
     public enum OpType
     {
         Saturation,
-        Exposure
+        Exposure,
+        Contrast
     }
     public interface IEditOperation
     {

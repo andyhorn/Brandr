@@ -54,9 +54,12 @@
                 <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
 
+            <!--#region Controls -->
             <StackPanel
                 Grid.Column="0"
                 Grid.Row="1">
+                
+                <!--#region Saturation -->
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -80,6 +83,9 @@
                     ValueChanged="SaturationSlider_ValueChanged"
                     PreviewMouseUp="ParameterSet"/>
                 </StackPanel>
+                <!--#endregion-->
+                
+                <!--#region Exposure-->
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -103,6 +109,33 @@
                         ValueChanged="ExposureSlider_ValueChanged"
                         PreviewMouseUp="ParameterSet"/>
                 </StackPanel>
+                <!--#endregion-->
+                
+                <!--#region Contrast -->
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Contrast: "/>
+                        <Label Grid.Column="1" Content="{Binding Contrast}"
+                               HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="2" VerticalAlignment="Center">
+                            <Hyperlink Click="Reset" Tag="Contrast">Reset</Hyperlink>
+                        </TextBlock>
+                    </Grid>
+                    <Slider
+                        Name="ContrastSlider"
+                        Minimum="-100"
+                        Maximum="100"
+                        IsSnapToTickEnabled="True"
+                        TickFrequency="1"
+                        ValueChanged="ContrastSlider_ValueChanged"
+                        PreviewMouseUp="ParameterSet"/>
+                </StackPanel>
+                <!--#endregion-->
             </StackPanel>
             <StackPanel Grid.Column="0"
                         Grid.Row="2"
@@ -114,6 +147,8 @@
                          TextChanged="BrandingChanged"
                          Text="{Binding Path=BrandingText}"/>
             </StackPanel>
+            <!--#endregion-->
+            
         </Grid>
 
         <Border

@@ -7,16 +7,20 @@ namespace Brandr.Models
         public Saturation Saturation { get; }
         public Exposure Exposure { get; }
 
+        public Contrast Contrast { get; }
+
         public OperationList()
         {
             Saturation = new Saturation();
             Exposure = new Exposure();
+            Contrast = new Contrast();
         }
 
         public void ResetAll()
         {
             Saturation.Reset();
             Exposure.Reset();
+            Contrast.Reset();
         }
     }
 }
