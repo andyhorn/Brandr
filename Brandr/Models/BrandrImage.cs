@@ -90,14 +90,14 @@ namespace Brandr.Models
                 if (_ops.Saturation.Changed)
                 {
                     double saturation = _ops.Saturation.Get();
-                    Processor.Saturation(ref bytes, saturation);
+                    Processor.Process(ref bytes, saturation, "Saturation");
                 }
 
                 if(_ops.Exposure.Changed)
                 {
                     //var exposure = MathHelper.AdjustRange(_ops.Exposure.Get(), 100, -100, 5, 0);
                     double exposure = _ops.Exposure.Get();
-                    Processor.Exposure(ref bytes, exposure);
+                    Processor.Process(ref bytes, exposure, "Exposure");
                 }
 
                 int length = bytes.Length;
