@@ -1,4 +1,6 @@
 ﻿using Brandr.Helpers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Brandr.Models
 {
@@ -98,22 +100,41 @@ namespace Brandr.Models
                 byte[] bytes = new byte[_buffer.Length];
                 _buffer.CopyTo(bytes, 0);
 
+                var edits = new Dictionary<string, double>();
+
                 if (_ops.Saturation.Changed)
                 {
                     double saturation = _ops.Saturation.Get();
-                    Processor.Process(ref bytes, saturation, "Saturation");
+                    edits.Add("Saturation", saturation);
+                    //Processor.Process(ref bytes, saturation, "Saturation");
                 }
 
                 if(_ops.Exposure.Changed)
                 {
                     double exposure = _ops.Exposure.Get();
-                    Processor.Process(ref bytes, exposure, "Exposure");
+                    edits.Add("Exposure", exposure);
+                    //Processor.Process(ref bytes, exposure, "Exposure");
                 }
 
                 if(_ops.Contrast.Changed)
                 {
                     double contrast = _ops.Contrast.Get();
-                    Processor.Process(ref bytes, contrast, "Contrast");
+                    edits.Add("Contrast", contrast);
+                    //Processor.Process(ref bytes, contrast, "Contrast");
+                }
+
+                if(edits.Count == 0)
+                {
+                    return;
+                }
+                else if(edits.Count == 1)
+                {
+                    var edit = edits.ToList().First();
+                    Processor.Process(ref bytes, edit.Value, edit.Key);
+                }
+                else if(edits.Count > 1)
+                {
+                    Processor.ProcessMultiple(ref bytes, edits);
                 }
 
                 int length = bytes.Length;

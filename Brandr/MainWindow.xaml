@@ -75,13 +75,14 @@
                         </TextBlock>
                     </Grid>
                     <Slider
-                    Name="SaturationSlider"
-                    Minimum="-100"
-                    Maximum="100"
-                    IsSnapToTickEnabled="True"
-                    TickFrequency="1"
-                    ValueChanged="SaturationSlider_ValueChanged"
-                    PreviewMouseUp="ParameterSet"/>
+                        Name="SaturationSlider"
+                        Minimum="-100"
+                        Maximum="100"
+                        IsSnapToTickEnabled="True"
+                        TickFrequency="1"
+                        ValueChanged="SliderValueChanged"
+                        PreviewMouseUp="ParameterSet"
+                        Tag="Saturation"/>
                 </StackPanel>
                 <!--#endregion-->
                 
@@ -106,7 +107,8 @@
                         Maximum="100"
                         IsSnapToTickEnabled="True"
                         TickFrequency="1"
-                        ValueChanged="ExposureSlider_ValueChanged"
+                        ValueChanged="SliderValueChanged"
+                        Tag="Exposure"
                         PreviewMouseUp="ParameterSet"/>
                 </StackPanel>
                 <!--#endregion-->
@@ -132,7 +134,8 @@
                         Maximum="100"
                         IsSnapToTickEnabled="True"
                         TickFrequency="1"
-                        ValueChanged="ContrastSlider_ValueChanged"
+                        ValueChanged="SliderValueChanged"
+                        Tag="Contrast"
                         PreviewMouseUp="ParameterSet"/>
                 </StackPanel>
                 <!--#endregion-->

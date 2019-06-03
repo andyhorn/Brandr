@@ -32,6 +32,7 @@ namespace Brandr
             viewModel.LoadImage();
             SaturationSlider.Value = 0;
             ExposureSlider.Value = 0;
+            ContrastSlider.Value = 0;
         }
 
         private void Save_Button_Click(object sender, RoutedEventArgs e)
@@ -39,25 +40,34 @@ namespace Brandr
             viewModel.SaveImage();
         }
 
-
         private void BrandingChanged(object sender, TextChangedEventArgs e)
         {
             viewModel.BrandingText = Brand_Text.Text;
         }
 
-        private void SaturationSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void SliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            viewModel.Saturation = (int)SaturationSlider.Value;
-        }
+            var slider = sender as Slider;
+            var tag = slider.Tag as string;
 
-        private void ExposureSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            viewModel.Exposure = (int)ExposureSlider.Value;
-        }
-
-        private void ContrastSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            viewModel.Contrast = (int)ContrastSlider.Value;
+            switch(tag)
+            {
+                case "Contrast":
+                {
+                    viewModel.Contrast = slider.Value;
+                    break;
+                }
+                case "Exposure":
+                {
+                    viewModel.Exposure = slider.Value;
+                    break;
+                }
+                case "Saturation":
+                {
+                    viewModel.Saturation = slider.Value;
+                    break;
+                }
+            }
         }
 
         private void ParameterSet(object sender, MouseButtonEventArgs e)
