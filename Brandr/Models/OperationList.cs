@@ -1,4 +1,4 @@
-﻿using Brandr.Models.Operations;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,20 +7,41 @@ namespace Brandr.Models
     public class OperationList
     {
         public List<IEditOperation> Operations { get; }
-        public IEditOperation Alpha { get => Operations.FirstOrDefault(op => op.Type == OpType.Alpha); }
-        public IEditOperation Saturation { get => Operations.FirstOrDefault(op => op.Type == OpType.Saturation); }
-        public IEditOperation Exposure { get => Operations.FirstOrDefault(op => op.Type == OpType.Exposure); }
-        public IEditOperation Contrast { get => Operations.FirstOrDefault(op => op.Type == OpType.Contrast); }
 
         public OperationList()
         {
-            Operations = new List<IEditOperation>
+            Operations = new List<IEditOperation>();
+
+            foreach (OpType type in Enum.GetValues(typeof(OpType)))
             {
-                new Alpha(),
-                new Contrast(),
-                new Exposure(),
-                new Saturation()
-            };
+                Operations.Add(new EditOperation(type));
+            }
+        }
+
+        public IEditOperation Get(OpType type)
+        {
+            var val = Operations.FirstOrDefault(op => op.Type == type);
+            return val;
+        }
+
+        public void Reset(OpType type)
+        {
+            var op = Get(type);
+
+            if (op != null)
+            {
+                op.Reset();
+            }
+        }
+
+        public void Reset(string type)
+        {
+            var op = Operations.FirstOrDefault(e => e.Type.ToString() == type);
+
+            if (op != null)
+            {
+                op.Reset();
+            }
         }
 
         public void ResetAll()

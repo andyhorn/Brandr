@@ -21,36 +21,6 @@ namespace Brandr.ViewModels
                 OnPropertyChanged("BrandingText");
             }
         }
-
-        /*
-        public double Saturation
-        {
-            get => BrandrImage.Saturation.Value;
-            set
-            {
-                BrandrImage.Saturation.Value = value;
-                OnPropertyChanged("Saturation");
-            }
-        }
-        public double Exposure
-        {
-            get => BrandrImage.Exposure.Value;
-            set
-            {
-                BrandrImage.Exposure.Value = value;
-                OnPropertyChanged("Exposure");
-            }
-        }
-        public double Contrast
-        {
-            get => BrandrImage.Contrast.Value;
-            set
-            {
-                BrandrImage.Contrast.Value = value;
-                OnPropertyChanged("Contrast");
-            }
-        }
-        */
         public double Alpha => GetValue(OpType.Alpha);
         public double Contrast => GetValue(OpType.Contrast);
         public double Exposure => GetValue(OpType.Exposure);

@@ -1,16 +1,12 @@
 ﻿namespace Brandr.Models
 {
-    public abstract class EditOperation : IEditOperation
+    public class EditOperation : IEditOperation
     {
-        protected OpType _type;
+        public OpType Type { get; private set; }
+        public bool Changed { get; private set; }
+        public string Name { get => Type.ToString(); }
 
-        protected double _value;
-
-        protected EditOperation()
-        {
-            _value = 0;
-        }
-
+        private double _value;
         public double Value
         {
             get => _value;
@@ -20,8 +16,22 @@
                 Changed = true;
             }
         }
-        public bool Changed { get; private set; }
-        public OpType Type => _type;
+
+        public EditOperation(OpType type)
+        {
+            Type = type;
+            Value = 0;
+        }
+
+        //public double Value
+        //{
+        //    get => _value;
+        //    set
+        //    {
+        //        _value = value;
+        //        Changed = true;
+        //    }
+        //}
 
         public virtual void Reset()
         {
