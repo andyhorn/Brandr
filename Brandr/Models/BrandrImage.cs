@@ -5,13 +5,10 @@ namespace Brandr.Models
 {
     public class BrandrImage
     {
-        private readonly string ImageFilter = "Images (*.bmp;*.jpg;*.gif;*.png;*.jpeg)|*.bmp;*.jpg;*.gif;*.png;*.jpeg";
-        private readonly string SaveFilter = "BMP (*.bmp)|*.bmp|JPG (*.jpg)|*.jpg|JPEG (*.jpeg)|*.jpeg|GIF (*.gif)|*.gif|PNG (*.png)|*.png|All files (*.*)|*.*";
-        private readonly string DefaultSaveFormat = "png";
         private byte[] _original;
         private byte[] _preview;
         private byte[] _reduced;
-        private OperationList _ops;
+        private IOperationList _ops;
         public List<IEditOperation> Operations { get => _ops.Operations; }
 
         #region Properties
@@ -26,22 +23,8 @@ namespace Brandr.Models
                 }
                 else
                 {
-                    
-                    //var length = _reduced.Length;
-                    //_preview = new byte[length];
-                    //_reduced.CopyTo(_preview, 0);
                     return _preview;
                 }
-
-
-                if(_reduced == null)
-                {
-                    var length = _original.Length;
-                    _reduced = new byte[length];
-                    _original.CopyTo(_reduced, 0);
-                }
-
-                return _reduced;
             }
         }
         public IEditOperation Saturation => _ops.Get(OpType.Saturation);
@@ -61,7 +44,7 @@ namespace Brandr.Models
         public bool LoadImage()
         {
             // get the file bytes
-            var bytes = FileHelper.GetBytes(ImageFilter);
+            var bytes = FileHelper.GetBytes(Constants.ImageFilter);
 
             // if nothing was loaded, return
             if (bytes == null || bytes.Length == 0)
@@ -100,7 +83,7 @@ namespace Brandr.Models
                 Processor.Process(ref edited, edits);
 
                 // save the modified bytes to a file
-                FileHelper.SaveBytes(edited, SaveFilter, DefaultSaveFormat);
+                FileHelper.SaveBytes(edited, Constants.SaveFilter, Constants.DefaultSaveFormat);
             }
         }
 
@@ -143,39 +126,11 @@ namespace Brandr.Models
             }
 
             _ops.Reset(property);
-
-            //switch(property)
-            //{
-            //    case "Alpha":
-            //    {
-            //        Alpha.Reset();
-            //        break;
-            //    }
-            //    case "Exposure":
-            //    {
-            //        Exposure.Reset();
-            //        break;
-            //    }
-            //    case "Saturation":
-            //    {
-            //        Saturation.Reset();
-            //        break;
-            //    }
-            //    case "Contrast":
-            //    {
-            //        Contrast.Reset();
-            //        break;
-            //    }
-            //}
         }
 
         public void ResetAll()
         {
             _ops.ResetAll();
-            //foreach(var op in Operations)
-            //{
-            //    op.Reset();
-            //}
         }
     }
 }

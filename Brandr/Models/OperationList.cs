@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Brandr.Models
 {
-    public class OperationList
+    public class OperationList : IOperationList
     {
         public List<IEditOperation> Operations { get; }
 
