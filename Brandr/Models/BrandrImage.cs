@@ -33,14 +33,10 @@ namespace Brandr.Models
                 return _display;
             }
         }
-        public IEditOperation Saturation => _ops.Saturation;
-        public IEditOperation Exposure => _ops.Exposure;
-        public IEditOperation Contrast => _ops.Contrast;
-
-        public void Set(string property, double value)
-        {
-
-        }
+        public IEditOperation Saturation => _ops.Get(OpType.Saturation);
+        public IEditOperation Exposure => _ops.Get(OpType.Exposure);
+        public IEditOperation Contrast => _ops.Get(OpType.Contrast);
+        public IEditOperation Alpha => _ops.Get(OpType.Alpha);
         #endregion
 
         public BrandrImage()
@@ -103,29 +99,31 @@ namespace Brandr.Models
                 return;
             }
 
-            switch(property)
-            {
-                case "Alpha":
-                {
-                    _ops.Alpha.Reset();
-                    break;
-                }
-                case "Exposure":
-                {
-                    _ops.Exposure.Reset();
-                    break;
-                }
-                case "Saturation":
-                {
-                    _ops.Saturation.Reset();
-                    break;
-                }
-                case "Contrast":
-                {
-                    _ops.Contrast.Reset();
-                    break;
-                }
-            }
+            _ops.Reset(property);
+
+            //switch(property)
+            //{
+            //    case "Alpha":
+            //    {
+            //        Alpha.Reset();
+            //        break;
+            //    }
+            //    case "Exposure":
+            //    {
+            //        Exposure.Reset();
+            //        break;
+            //    }
+            //    case "Saturation":
+            //    {
+            //        Saturation.Reset();
+            //        break;
+            //    }
+            //    case "Contrast":
+            //    {
+            //        Contrast.Reset();
+            //        break;
+            //    }
+            //}
         }
 
         public void ResetAll()

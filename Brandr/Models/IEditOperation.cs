@@ -13,5 +13,6 @@
         bool Changed { get; }
         OpType Type { get; }
         void Reset();
+        string Name { get; }
     }
 }
