@@ -1,6 +1,8 @@
 ﻿using Brandr.Models;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Media;
+using WpfColorFontDialog;
 
 namespace Brandr.ViewModels
 {
@@ -19,6 +21,18 @@ namespace Brandr.ViewModels
             {
                 brandingText = value;
                 OnPropertyChanged("BrandingText");
+            }
+        }
+
+        private FontInfo _font;
+        public FontInfo Font
+        {
+            get => _font;
+
+            set
+            {
+                _font = value;
+                OnPropertyChanged("Font");
             }
         }
 

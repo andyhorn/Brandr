@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Documents;
+using WpfColorFontDialog;
 
 namespace Brandr
 {
@@ -14,6 +15,7 @@ namespace Brandr
         private MainWindowViewModel viewModel;
 
         public byte[] Image { get => viewModel.Image; }
+        public string Font => viewModel.Font.Family.Source;
 
         public MainWindow()
         {
@@ -24,6 +26,8 @@ namespace Brandr
             viewModel.ResetAll();
 
             viewModel.BrandingText = Brand_Text.Text;
+
+            viewModel.Font = FontInfo.GetControlFont(ChosenFont);
 
             DataContext = viewModel;
         }
@@ -92,6 +96,22 @@ namespace Brandr
 
             viewModel.Process();
             viewModel.Reset(tag);
+        }
+
+        private void FontClicked(object sender, MouseButtonEventArgs e)
+        {
+            var fontDialog = new ColorFontDialog(true, true, true);
+            fontDialog.Font = FontInfo.GetControlFont(ChosenFont);
+
+            if (fontDialog.ShowDialog() == true)
+            {
+                var fontInfo = fontDialog.Font;
+
+                if (fontInfo != null)
+                {
+                    viewModel.Font = fontInfo;
+                }
+            }
         }
 
         /*
