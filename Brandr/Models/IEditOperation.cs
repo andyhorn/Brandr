@@ -2,7 +2,6 @@
 {
     public enum OpType
     {
-        Alpha,
         Saturation,
         Exposure,
         Contrast

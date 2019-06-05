@@ -30,7 +30,6 @@ namespace Brandr.Models
         public IEditOperation Saturation => _ops.Get(OpType.Saturation);
         public IEditOperation Exposure => _ops.Get(OpType.Exposure);
         public IEditOperation Contrast => _ops.Get(OpType.Contrast);
-        public IEditOperation Alpha => _ops.Get(OpType.Alpha);
         #endregion
 
         public BrandrImage()

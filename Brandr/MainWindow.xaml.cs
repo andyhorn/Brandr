@@ -23,7 +23,6 @@ namespace Brandr
 
             viewModel.ResetAll();
 
-            viewModel.ValueChanged("Alpha", 100);
             viewModel.BrandingText = Brand_Text.Text;
 
             DataContext = viewModel;
@@ -32,7 +31,6 @@ namespace Brandr
         private void Load_Button_Click(object sender, RoutedEventArgs e)
         {
             viewModel.LoadImage();
-            AlphaSlider.Value = 100;
             SaturationSlider.Value = 0;
             ExposureSlider.Value = 0;
             ContrastSlider.Value = 0;
@@ -75,11 +73,6 @@ namespace Brandr
 
             switch(tag)
             {
-                case "Alpha":
-                {
-                    AlphaSlider.Value = 100;
-                    break;
-                }
                 case "Exposure":
                 {
                     ExposureSlider.Value = 0;

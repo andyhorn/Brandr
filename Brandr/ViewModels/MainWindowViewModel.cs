@@ -21,7 +21,7 @@ namespace Brandr.ViewModels
                 OnPropertyChanged("BrandingText");
             }
         }
-        public double Alpha => GetValue(OpType.Alpha);
+
         public double Contrast => GetValue(OpType.Contrast);
         public double Exposure => GetValue(OpType.Exposure);
         public double Saturation => GetValue(OpType.Saturation);

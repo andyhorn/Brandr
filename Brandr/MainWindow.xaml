@@ -103,8 +103,8 @@
                     </Grid>
                     <Slider
                         Name="ExposureSlider"
-                        Minimum="-100"
-                        Maximum="100"
+                        Minimum="-50"
+                        Maximum="50"
                         IsSnapToTickEnabled="True"
                         TickFrequency="1"
                         ValueChanged="SliderValueChanged"
@@ -140,33 +140,7 @@
                 </StackPanel>
                 <!--#endregion-->
 
-                <!--#region Alpha -->
-                <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Content="Opacity: "/>
-                        <Label Grid.Column="1" Content="{Binding Alpha}"
-                               HorizontalAlignment="Left"/>
-                        <TextBlock Grid.Column="2" VerticalAlignment="Center">
-                            <Hyperlink Click="Reset" Tag="Alpha">Reset</Hyperlink>
-                        </TextBlock>
-                    </Grid>
-                    <Slider
-                        Name="AlphaSlider"
-                        Minimum="0"
-                        Maximum="100"
-                        Value="100"
-                        IsSnapToTickEnabled="True"
-                        TickFrequency="1"
-                        ValueChanged="SliderValueChanged"
-                        Tag="Alpha"
-                        PreviewMouseUp="ParameterSet"/>
-                </StackPanel>
-                <!--#endregion-->
+                
             </StackPanel>
             <StackPanel Grid.Column="0"
                         Grid.Row="2"
